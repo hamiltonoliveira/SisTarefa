@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SisTarefa.Ui", "SisTarefa.Ui\SisTarefa.Ui.csproj", "{29823B0F-D8E5-4D29-B17D-883855C0B926}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29823B0F-D8E5-4D29-B17D-883855C0B926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29823B0F-D8E5-4D29-B17D-883855C0B926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29823B0F-D8E5-4D29-B17D-883855C0B926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29823B0F-D8E5-4D29-B17D-883855C0B926}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52DFE1C4-A353-4A31-809A-BFD421019658}
+	EndGlobalSection
+EndGlobal
