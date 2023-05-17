@@ -28,7 +28,7 @@ Certifique-se de cumprir quaisquer outros requisitos específicos do sistema ope
 2. Abra o arquivo `NomeDoArquivo.sln` em sua IDE preferida.
 3. Restaure os pacotes NuGet necessários.
 4. Compile e execute o projeto.
-5. Para gerar o banco execute dentro do projeto: Sistarefa.Infra.Data <update-database>
+5. Para gerar o banco execute dentro do projeto: Sistarefa.Infra.Data digite update-database
 
 
 ## Uso
