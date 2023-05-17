@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.12" />
+   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SisTarefa.Infra.Data\SisTarefa.Infra.Data.csproj" />
+    <ProjectReference Include="..\SisTarefa.Ioc\SisTarefa.Ioc.csproj" />
   </ItemGroup>
 
 </Project>

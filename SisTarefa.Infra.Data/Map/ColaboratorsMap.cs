@@ -10,6 +10,10 @@ namespace SisTarefa.Infra.Data.Map
         {
             builder.ToTable("Colaborators");
             builder.HasKey(x => x.Id);
+            builder.HasOne(p => p.Users)
+                   .WithOne(p => p.Colaborators)
+                   .HasForeignKey<Colaborators>(p => p.UsersId);
+
             builder.Property(x => x.CreatedAt).HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt).HasColumnType("datetime");
             builder.Property(x => x.DeletedAt).HasColumnType("datetime");

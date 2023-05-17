@@ -6,22 +6,24 @@ namespace SisTarefa.Domain.Entities
 {
     public class TimeTraCkers : Base
     {
-        public int UsersId { get; set; }
-        public Users Users { get; set; }
-        public List<Tasks> Tasks { get; set; }
-        public List<Colaborators> Colaborators { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; } 
         public string? TimeZoneId { get; set; }
-       
-        public TimeTraCkers(DateTime startDate, DateTime endDate)
+
+        public int ColaboratorsId { get; set; }
+        public Colaborators Colaborators { get; set; }
+
+        public int TasksId { get; set; }
+        public Tasks Tasks { get; set; }
+
+        public TimeTraCkers(DateTime startDate, DateTime endDate, string? timeZoneId)
         {
             StartDate = startDate;
             EndDate = endDate;
-            Tasks = new List<Tasks>();
-            Colaborators = new List<Colaborators>();
+            TimeZoneId = timeZoneId;
             SetTimeZoneId();
         }
+
         void SetTimeZoneId()
         {
             var fusosHorarios = TimeZoneInfo.GetSystemTimeZones();

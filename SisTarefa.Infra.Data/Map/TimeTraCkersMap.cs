@@ -10,6 +10,17 @@ namespace SisTarefa.Infra.Data.Map
         {
             builder.ToTable("TimeTraCkers");
             builder.HasKey(x => x.Id);
+
+            builder.HasOne(p => p.Colaborators)
+                   .WithMany(p => p.TimeTraCkers)
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(p=> p.Tasks)
+                   .WithMany(p => p.TimeTraCkers)
+                   .IsRequired()
+                   .OnDelete(DeleteBehavior.Cascade);
+
             builder.Property(x => x.CreatedAt).HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt).HasColumnType("datetime");
             builder.Property(x => x.DeletedAt).HasColumnType("datetime");

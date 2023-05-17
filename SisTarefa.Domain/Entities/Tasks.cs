@@ -5,15 +5,16 @@ namespace SisTarefa.Domain.Entities
 {
     public class Tasks : Base
     {
-        public int UsersId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public List<Projects> Projects { get; set; }
+        public int ProjectsId { get; set; }
+        public Projects Projects { get; set; }
+        public ICollection<TimeTraCkers> TimeTraCkers { get; set; }
+
         public Tasks(string? name, string? description)
         {
             Name = name;
             Description = description;
-            Projects = new List<Projects>();
         }
 
         public class TasksValidation : AbstractValidator<TaskDto>

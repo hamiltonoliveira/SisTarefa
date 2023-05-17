@@ -11,6 +11,8 @@ namespace SisTarefa.Domain.Entities
         [JsonIgnore]
         public string? Password { get; set; }
 
+        public Colaborators Colaborators { get; set; }
+
         public Users(string userName, string password)
         {
             UserName = userName;
