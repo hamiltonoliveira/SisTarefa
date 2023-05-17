@@ -5,8 +5,10 @@ using SisTarefa.Infra.Data.Map;
 
 namespace SisTarefa.Infra.Data.Data
 {
+   
     public class DataContext : DbContext, ISalvar
     {
+      
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Users>? Users { get; set; }
         public DbSet<TimeTraCkers>? TimeTraCkers { get; set; }

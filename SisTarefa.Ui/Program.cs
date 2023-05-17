@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SisTarefa.Domain.Helpers; 
 using SisTarefa.Infra.Data.Data;
+using SisTarefa.Infra.Ioc;
 using System.Text; 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -65,6 +66,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 builder.Services.AddInfraStructure(builder.Configuration);
+builder.Services.AddServices(builder.Configuration);
  
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connectionString));
 

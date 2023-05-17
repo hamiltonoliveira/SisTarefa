@@ -16,6 +16,7 @@ namespace SisTarefa.Infra.Data.Map
             builder.Property(x => x.DeletedAt).HasColumnType("datetime");
             builder.Property(x => x.UserName).HasMaxLength(250).IsRequired(); 
             builder.Property(x => x.Password).HasMaxLength(512).IsRequired();
+            builder.Property(x => x.GuidI).HasMaxLength(200).IsRequired();
         }
     }
 }

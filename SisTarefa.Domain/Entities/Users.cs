@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SisTarefa.Domain.Dto;
+using System;
 using System.Text.Json.Serialization;
 
 namespace SisTarefa.Domain.Entities
@@ -11,6 +12,8 @@ namespace SisTarefa.Domain.Entities
         [JsonIgnore]
         public string? Password { get; set; }
 
+        public string? GuidI { get; set; } = Guid.NewGuid().ToString();
+
         public Colaborators Colaborators { get; set; }
 
         public Users(string userName, string password)
@@ -18,6 +21,7 @@ namespace SisTarefa.Domain.Entities
             UserName = userName;
             Password = password;
         }
+        public void SetDeletar() => DeletedAt = DateTime.UtcNow;
         public class UsersValidation : AbstractValidator<UsersDto>
         {
             public UsersValidation()
