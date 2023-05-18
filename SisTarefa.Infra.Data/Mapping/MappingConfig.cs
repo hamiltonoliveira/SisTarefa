@@ -12,6 +12,18 @@ namespace SisTarefa.Infra.Data.Mapping
             {
                 CreateMap<Users, UsersDto>();
                 CreateMap<UsersDto, Users>();
+
+                CreateMap<Colaborators, ColaboratorsDto>();
+                CreateMap<ColaboratorsDto, Colaborators>();
+
+                CreateMap<Projects, ProjectsDto>();
+                CreateMap<ProjectsDto, Projects>();
+
+                CreateMap<TimeTraCkers, TimeTraCkersDto>();
+                CreateMap<TimeTraCkersDto, TimeTraCkers>();
+
+                CreateMap<Tasks, TaskDto>();
+                CreateMap<TaskDto, Tasks>();
             }
         }
     }

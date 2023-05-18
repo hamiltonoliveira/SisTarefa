@@ -13,13 +13,11 @@ namespace SisTarefa.Infra.Data.Map
 
             builder.HasOne(p => p.Colaborators)
                    .WithMany(p => p.TimeTraCkers)
-                   .IsRequired()
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .IsRequired();
 
-            builder.HasOne(p=> p.Tasks)
+            builder.HasOne(p => p.Tasks)
                    .WithMany(p => p.TimeTraCkers)
-                   .IsRequired()
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .IsRequired();
 
             builder.Property(x => x.CreatedAt).HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt).HasColumnType("datetime");

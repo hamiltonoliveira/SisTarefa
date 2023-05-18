@@ -60,13 +60,13 @@ namespace SisTarefa.Infra.Data.Repositories
                 if (verificaUsers == null)
                 {
                     _db.Users.Add(entity);
-                    await _db.CommitAsync();
+                     await _db.CommitAsync();
                 }
                 return entity;
             }
             finally
             {
-                Dispose();
+                //Dispose();
             }
         }
         public async Task UpdateAsync(Users entity)

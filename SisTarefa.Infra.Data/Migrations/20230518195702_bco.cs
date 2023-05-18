@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SisTarefa.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Tarefa : Migration
+    public partial class bco : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,6 @@ namespace SisTarefa.Infra.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsersId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -102,8 +101,8 @@ namespace SisTarefa.Infra.Data.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     TimeZoneId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    ColaboratorsId = table.Column<int>(type: "int", nullable: false),
                     TasksId = table.Column<int>(type: "int", nullable: false),
+                    ColaboratorsId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime", nullable: false)

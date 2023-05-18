@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using SisTarefa.Domain.Helpers; 
 using SisTarefa.Infra.Data.Data; 
 using SisTarefa.Infra.Ioc;
@@ -31,7 +32,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddCors();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(x=>x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 builder.Services.AddEndpointsApiExplorer();
 

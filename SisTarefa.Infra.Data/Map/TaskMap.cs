@@ -13,9 +13,8 @@ namespace SisTarefa.Infra.Data.Map
 
             builder.HasOne(p => p.Projects)
                    .WithMany(p => p.Tasks)
-                   .IsRequired()
-                   .OnDelete(DeleteBehavior.Cascade);
-
+                   .IsRequired();
+      
             builder.Property(x => x.CreatedAt).HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt).HasColumnType("datetime");
             builder.Property(x => x.DeletedAt).HasColumnType("datetime");

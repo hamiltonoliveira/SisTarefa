@@ -5,9 +5,7 @@ namespace SisTarefa.Domain.Entities
 {
     public class Projects : Base
     {
-        public int UsersId { get; set; }
         public string? Name { get; private set; }
-
         public ICollection<Tasks> Tasks { get; set; }
         public Projects(string? name)
         {

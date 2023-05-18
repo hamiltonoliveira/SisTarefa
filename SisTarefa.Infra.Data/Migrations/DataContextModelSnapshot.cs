@@ -77,9 +77,6 @@ namespace SisTarefa.Infra.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Projects", (string)null);

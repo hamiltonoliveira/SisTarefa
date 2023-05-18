@@ -16,11 +16,11 @@ namespace SisTarefa.Domain.Entities
 
         public Colaborators Colaborators { get; set; }
 
-        public Users(string userName, string password)
-        {
-            UserName = userName;
-            Password = password;
-        }
+        //public Users(string userName, string password)
+        //{
+        //    UserName = userName;
+        //    Password = password;
+        //}
         public void SetDeletar() => DeletedAt = DateTime.UtcNow;
         public class UsersValidation : AbstractValidator<UsersDto>
         {

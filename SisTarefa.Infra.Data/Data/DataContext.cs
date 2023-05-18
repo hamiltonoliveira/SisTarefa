@@ -10,6 +10,11 @@ namespace SisTarefa.Infra.Data.Data
     {
       
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
+        public DataContext()
+        {
+        }
+
         public DbSet<Users>? Users { get; set; }
         public DbSet<TimeTraCkers>? TimeTraCkers { get; set; }
         public DbSet<Colaborators>? Colaborators { get; set; }

@@ -13,6 +13,7 @@ namespace SisTarefa.Infra.Ioc
         {
             service.AddScoped<IAutenticarRepositorio, AutenticarRepositorio>();
             service.AddScoped<IUsersRepository, UsersRepository>();
+            service.AddScoped<IColaboratorsRepository, ColaboratorsRepository>();
             return service;
         }
 
@@ -20,7 +21,8 @@ namespace SisTarefa.Infra.Ioc
         {
            service.AddScoped<IAutenticarService, AutenticarService>();
            service.AddScoped<IUsersService, UsersService>();
-            return service;
+           service.AddScoped<IColaboratorsService, ColaboratorsService>();
+           return service;
         }
     }
 }

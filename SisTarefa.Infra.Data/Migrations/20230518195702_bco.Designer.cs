@@ -12,8 +12,8 @@ using SisTarefa.Infra.Data.Data;
 namespace SisTarefa.Infra.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230518141028_Tarefa")]
-    partial class Tarefa
+    [Migration("20230518195702_bco")]
+    partial class bco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,9 +79,6 @@ namespace SisTarefa.Infra.Data.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
