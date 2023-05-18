@@ -2,7 +2,6 @@
 using SisTarefa.Domain.Entities;
 using SisTarefa.Infra.Data.Data;
 using SisTarefa.Infra.Data.Interfaces;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace SisTarefa.Infra.Data.Repositories
@@ -33,7 +32,6 @@ namespace SisTarefa.Infra.Data.Repositories
             }
         }
 
-
         public async Task<List<Users>> GetAllAsync(int Page, int PageSize)
         {
             if (Page == 0)
@@ -53,12 +51,18 @@ namespace SisTarefa.Infra.Data.Repositories
             return await _db.Users.FindAsync(id);
         }
 
-        public async Task InsertAsync(Users entity)
+        public async Task<Users> InsertAsync(Users entity)
         {
             try
             {
-                _db.Users.Add(entity);
-                await _db.CommitAsync();
+                var verificaUsers = _db.Users.SingleOrDefault(x => x.UserName == entity.UserName);
+
+                if (verificaUsers == null)
+                {
+                    _db.Users.Add(entity);
+                    await _db.CommitAsync();
+                }
+                return entity;
             }
             finally
             {
@@ -80,9 +84,9 @@ namespace SisTarefa.Infra.Data.Repositories
             finally { Dispose(); }
         }
 
-        public IEnumerable<Users> Where(Expression<Func<Users, bool>> expression)
+        public async Task<List<Users>> WhereAsync(Expression<Func<Users, bool>> expression)
         {
-            return _db.Set<Users>().Where(expression).ToList();
+            return await _db.Set<Users>().Where(expression).ToListAsync();
         }
 
         public void Dispose()

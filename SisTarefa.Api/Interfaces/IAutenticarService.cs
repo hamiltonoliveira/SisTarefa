@@ -1,7 +1,9 @@
-﻿namespace SisTarefa.Api.Interfaces
+﻿using SisTarefa.Domain.Dto;
+
+namespace SisTarefa.Api.Interfaces
 {
     public interface IAutenticarService
     {
-        string GerarToKen(string UserName);
+        Task<TokensDto> GerarToKen(string UserName);
     }
 }

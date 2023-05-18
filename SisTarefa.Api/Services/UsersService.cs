@@ -6,13 +6,14 @@ using System.Linq.Expressions;
 
 namespace SisTarefa.Api.Services
 {
-    public class UsersService : IService<Users>
+    public class UsersService : IUsersService
     {
         private readonly IUsersRepository _usersRepositorio;
+       
         public UsersService(IUsersRepository usersRepositorio)
         {
           _usersRepositorio = usersRepositorio;
-        }
+         }
         public async Task DeleteAsync(int Id)
         {
             await _usersRepositorio.DeleteAsync(Id);
@@ -33,9 +34,9 @@ namespace SisTarefa.Api.Services
             return await _usersRepositorio.GetIdAsync(id);
         }
 
-        public async Task InsertAsync(Users entity)
+        public async Task<Users> InsertAsync(Users entity)
         {
-            await _usersRepositorio.InsertAsync(entity);
+           return await _usersRepositorio.InsertAsync(entity);
         }
 
         public async Task UpdateAsync(Users entity)
@@ -43,9 +44,9 @@ namespace SisTarefa.Api.Services
             await _usersRepositorio.UpdateAsync(entity);
         }
 
-        public IEnumerable<Users> Where(Expression<Func<Users, bool>> expression)
+        public async Task<List<Users>> WhereAsync(Expression<Func<Users, bool>> expression)
         {
-            return _usersRepositorio.Where(expression);
+           return await _usersRepositorio.WhereAsync(expression);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SisTarefa.Api.Interfaces;
+using SisTarefa.Domain.Dto;
 using SisTarefa.Infra.Data.Interfaces;
 
 namespace SisTarefa.Api.Services
@@ -10,9 +11,10 @@ namespace SisTarefa.Api.Services
         {
             _autenticarRepositorio = autenticarRepositorio;
         }
-        public string GerarToKen(string UserName)
+        public async Task<TokensDto> GerarToKen(string UserName)
         {
-            return _autenticarRepositorio.GerarToKen(UserName);
+            return await _autenticarRepositorio.GerarToKen(UserName);
         }
     }
 }
+ 

@@ -7,9 +7,9 @@ namespace SisTarefa.Api.Interfaces
         Task<Tentity> GetIdAsync(int id); 
         Task<Tentity> GetGuidAsync(string guid);
         Task<List<Tentity>> GetAllAsync(int Page, int PageSize);
-        Task InsertAsync(Tentity entity);
+        Task<Tentity> InsertAsync(Tentity entity);
         Task UpdateAsync(Tentity entity);
         Task DeleteAsync(int Id);
-        IEnumerable<Tentity> Where(Expression<Func<Tentity, bool>> expression);
+        Task<List<Tentity>> WhereAsync(Expression<Func<Tentity, bool>> expression);
     }
 }
