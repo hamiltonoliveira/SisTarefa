@@ -12,7 +12,7 @@ using SisTarefa.Infra.Data.Data;
 namespace SisTarefa.Infra.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230518195702_bco")]
+    [Migration("20230518204332_bco")]
     partial class bco
     {
         /// <inheritdoc />
@@ -34,10 +34,12 @@ namespace SisTarefa.Infra.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -45,7 +47,8 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("UpdatedAt");
 
                     b.Property<int>("UsersId")
                         .HasColumnType("int");
@@ -67,10 +70,12 @@ namespace SisTarefa.Infra.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -78,7 +83,8 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -94,10 +100,12 @@ namespace SisTarefa.Infra.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -112,7 +120,8 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -133,16 +142,20 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("EndDate");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("StartDate");
 
                     b.Property<int>("TasksId")
                         .HasColumnType("int");
@@ -152,7 +165,8 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("UpdatedAt");
 
                     b.HasKey("Id");
 
@@ -172,10 +186,12 @@ namespace SisTarefa.Infra.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("CreatedAt");
 
                     b.Property<DateTime>("DeletedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("DeletedAt");
 
                     b.Property<string>("GuidI")
                         .IsRequired()
@@ -188,7 +204,8 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasColumnName("UpdatedAt");
 
                     b.Property<string>("UserName")
                         .IsRequired()

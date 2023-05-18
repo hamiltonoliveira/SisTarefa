@@ -14,10 +14,10 @@ namespace SisTarefa.Infra.Data.Map
             builder.HasOne(p => p.Projects)
                    .WithMany(p => p.Tasks)
                    .IsRequired();
-      
-            builder.Property(x => x.CreatedAt).HasColumnType("datetime");
-            builder.Property(x => x.UpdatedAt).HasColumnType("datetime");
-            builder.Property(x => x.DeletedAt).HasColumnType("datetime");
+
+            builder.Property(x => x.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime");
+            builder.Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").HasColumnType("datetime");
+            builder.Property(x => x.DeletedAt).HasColumnName("DeletedAt").HasColumnType("datetime");
             builder.Property(x => x.Name).HasMaxLength(250).IsRequired();
             builder.Property(x => x.Description).IsRequired();
         }

@@ -6,6 +6,7 @@ using SisTarefa.Api.Interfaces;
 using SisTarefa.Domain.Dto;
 using SisTarefa.Domain.Entities;
 using SisTarefa.Infra.Data.Data;
+using SisTarefa.Infra.Data.Interfaces;
 
 namespace SisTarefa.Ui.Controller
 {
@@ -17,6 +18,7 @@ namespace SisTarefa.Ui.Controller
         private readonly IAutenticarService _autenticarService;
         private readonly IUsersService _usersService;
         private readonly IColaboratorsService _colaboratorsService;
+         
 
         private readonly IMapper _mapper;
        
@@ -26,7 +28,7 @@ namespace SisTarefa.Ui.Controller
             _autenticarService = autenticarService;
             _usersService = usersService;
             _colaboratorsService = colaboratorsService;
-        }
+         }
 
         [HttpPost("Criar")]
         public async Task<IActionResult> Criar([FromBody] UsersDto usersDto)
@@ -37,8 +39,8 @@ namespace SisTarefa.Ui.Controller
 
             try
             {
-                await _usersService.InsertAsync(users);
-                Colaborators Colaborators = new Colaborators(users.Id, usersDto.UserName);
+                var _idUsers = await _usersService.InsertAsync(users);
+                var Colaborators = new Colaborators(_idUsers.Id, usersDto.UserName);
 
                 await _colaboratorsService.InsertAsync(Colaborators);
 
@@ -52,10 +54,7 @@ namespace SisTarefa.Ui.Controller
                 // ...
             }
 
-
-
-
-            //var token = _autenticarService.GerarToKen(usersDto.UserName);
+            var token = _autenticarService.GerarToKen(usersDto.UserName);
 
             var TokensViewModel = new
             {

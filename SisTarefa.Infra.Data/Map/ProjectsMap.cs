@@ -10,9 +10,9 @@ namespace SisTarefa.Infra.Data.Map
         {
             builder.ToTable("Projects");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.CreatedAt).HasColumnType("datetime");
-            builder.Property(x => x.UpdatedAt).HasColumnType("datetime");
-            builder.Property(x => x.DeletedAt).HasColumnType("datetime");
+            builder.Property(x => x.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime");
+            builder.Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").HasColumnType("datetime");
+            builder.Property(x => x.DeletedAt).HasColumnName("DeletedAt").HasColumnType("datetime");
             builder.Property(x => x.Name).HasMaxLength(250).IsRequired();
         }
     }

@@ -19,11 +19,11 @@ namespace SisTarefa.Infra.Data.Map
                    .WithMany(p => p.TimeTraCkers)
                    .IsRequired();
 
-            builder.Property(x => x.CreatedAt).HasColumnType("datetime");
-            builder.Property(x => x.UpdatedAt).HasColumnType("datetime");
-            builder.Property(x => x.DeletedAt).HasColumnType("datetime");
-            builder.Property(x => x.StartDate).HasColumnType("datetime");
-            builder.Property(x => x.EndDate).HasColumnType("datetime");
+            builder.Property(x => x.CreatedAt).HasColumnName("CreatedAt").HasColumnType("datetime");
+            builder.Property(x => x.UpdatedAt).HasColumnName("UpdatedAt").HasColumnType("datetime");
+            builder.Property(x => x.DeletedAt).HasColumnName("DeletedAt").HasColumnType("datetime");
+            builder.Property(x => x.StartDate).HasColumnName("StartDate").HasColumnType("datetime");
+            builder.Property(x => x.EndDate).HasColumnName("EndDate").HasColumnType("datetime");
             builder.Property(x => x.TimeZoneId).HasMaxLength(200);
         }
     }

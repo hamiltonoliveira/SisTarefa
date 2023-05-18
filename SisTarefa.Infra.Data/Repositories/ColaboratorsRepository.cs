@@ -18,8 +18,7 @@ namespace SisTarefa.Infra.Data.Repositories
             try
             {
                 _db.Colaborators.Add(entity);
-                 //await _db.CommitAsync();
-                
+                 await _db.CommitAsync();
                 return entity;
             }
             finally
