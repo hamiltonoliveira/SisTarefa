@@ -3,13 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SisTarefa.Domain.Helpers; 
-using SisTarefa.Infra.Data.Data;
+using SisTarefa.Infra.Data.Data; 
 using SisTarefa.Infra.Ioc;
 using System.Text; 
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("ConnectionTarefa");
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,7 +28,6 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod();
                      });
 });
-
 
 builder.Services.AddCors();
 

@@ -177,6 +177,11 @@ namespace SisTarefa.Infra.Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("GuidI")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(512)

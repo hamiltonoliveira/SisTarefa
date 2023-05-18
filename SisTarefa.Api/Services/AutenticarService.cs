@@ -11,6 +11,7 @@ namespace SisTarefa.Api.Services
         {
             _autenticarRepositorio = autenticarRepositorio;
         }
+     
         public async Task<TokensDto> GerarToKen(string UserName)
         {
             return await _autenticarRepositorio.GerarToKen(UserName);

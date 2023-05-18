@@ -12,8 +12,8 @@ using SisTarefa.Infra.Data.Data;
 namespace SisTarefa.Infra.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230517160958_Bco")]
-    partial class Bco
+    [Migration("20230518141028_Tarefa")]
+    partial class Tarefa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,6 +179,11 @@ namespace SisTarefa.Infra.Data.Migrations
 
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("GuidI")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Password")
                         .IsRequired()

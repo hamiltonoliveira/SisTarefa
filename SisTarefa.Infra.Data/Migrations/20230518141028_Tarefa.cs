@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SisTarefa.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Bco : Migration
+    public partial class Tarefa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +36,7 @@ namespace SisTarefa.Infra.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    GuidI = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime", nullable: false)

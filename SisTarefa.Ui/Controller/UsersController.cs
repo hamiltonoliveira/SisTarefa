@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using SisTarefa.Api.Helpers;
 using SisTarefa.Api.Interfaces;
-using SisTarefa.Api.Services;
 using SisTarefa.Domain.Dto;
-using System.Diagnostics;
+using SisTarefa.Domain.Entities;
 
 namespace SisTarefa.Ui.Controller
 {
@@ -11,36 +12,22 @@ namespace SisTarefa.Ui.Controller
     public class UsersController : ControllerBase
     {
         private readonly IAutenticarService _autenticarService;
-        private readonly UsersService _usersService;
-        public UsersController(IAutenticarService autenticarService, UsersService usersService) 
+        private readonly IUsersService _usersService;
+        private readonly IMapper _mapper;
+        public UsersController(IMapper mapper, IAutenticarService autenticarService, IUsersService usersService) 
         {
+             _mapper = mapper;
             _autenticarService = autenticarService;
-            //_usersService = usersService;
+            _usersService = usersService;
         }
-
 
         [HttpPost("Criar")]
         public async Task<IActionResult> Criar([FromBody] UsersDto usersDto)
         {
-            //Usuario usuario = _mapper.Map<Usuario>(usuarioDTO);
-            //var validator = new UsuarioValidation();
-            //var result = await validator.ValidateAsync(usuarioDTO);
-
-            //List<string> errors = new List<string>();
-            //if (!result.IsValid)
-            //{
-                //foreach (var failure in result.Errors)
-                //{
-                    //errors.Add(failure.ErrorMessage);
-                //}
-                //var retorna = String.Join("| ", errors.ToArray());
-               // return BadRequest(retorna);
-            //}
-
-
-
-
-            //await _usuarioRepositorio.InsertAsync(usuario);
+            Users users = _mapper.Map<Users>(usersDto);
+            users.Password = Criptograph.Encrypt(usersDto.Password);
+             
+            await _usersService.InsertAsync(users);
             var token = _autenticarService.GerarToKen(usersDto.UserName);
 
             var TokensViewModel = new

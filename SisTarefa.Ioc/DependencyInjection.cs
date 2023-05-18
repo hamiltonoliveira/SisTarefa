@@ -20,7 +20,7 @@ namespace SisTarefa.Infra.Ioc
         {
            service.AddScoped<IAutenticarService, AutenticarService>();
            service.AddScoped<IUsersService, UsersService>();
-           return service;
+            return service;
         }
     }
 }

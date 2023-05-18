@@ -24,11 +24,16 @@ namespace SisTarefa.Infra.Data.Repositories
             if (user == null)
             { return null; }
             
-            Token.Token = generateJwtToken(user.UserName, user.GuidI);
-            Token.TokenRefresh = generateJwtTokenRefresh(user.GuidI);
+            var _Token = generateJwtToken(user.UserName, user.GuidI);
+            var _TokenRefresh = generateJwtTokenRefresh(user.GuidI);
+
+            Token.Token = _Token;
+            Token.TokenRefresh = _TokenRefresh; 
+
             return Token;
         }
 
+      
         private string generateJwtToken(string UserName, string guid)
         {
             string oculto = CodigoCripto.Cripto();
@@ -65,5 +70,7 @@ namespace SisTarefa.Infra.Data.Repositories
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+       
     }
 }
