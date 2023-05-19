@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SisTarefa.Api.Helpers;
@@ -6,7 +7,11 @@ using SisTarefa.Api.Interfaces;
 using SisTarefa.Domain.Dto;
 using SisTarefa.Domain.Entities;
 using SisTarefa.Infra.Data.Data;
-using SisTarefa.Infra.Data.Interfaces;
+using System.Net;
+using System.Runtime.Serialization;
+using static SisTarefa.Domain.Entities.Users;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace SisTarefa.Ui.Controller
 {
@@ -14,54 +19,112 @@ namespace SisTarefa.Ui.Controller
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        
+
         private readonly IAutenticarService _autenticarService;
         private readonly IUsersService _usersService;
         private readonly IColaboratorsService _colaboratorsService;
-         
+
+        protected readonly DataContext _db;
 
         private readonly IMapper _mapper;
-       
-        public UsersController(IMapper mapper, IAutenticarService autenticarService, IUsersService usersService, IColaboratorsService colaboratorsService) 
+
+        public UsersController(DataContext db, IMapper mapper, IAutenticarService autenticarService, IUsersService usersService, IColaboratorsService colaboratorsService)
         {
-             _mapper = mapper;
+            _db = db;
+            _mapper = mapper;
             _autenticarService = autenticarService;
             _usersService = usersService;
             _colaboratorsService = colaboratorsService;
-         }
+        }
 
         [HttpPost("Criar")]
+        [ProducesResponseType(typeof(UsersDto), 201)]
+        [ProducesResponseType(typeof(ErrorResponse), 400)]
         public async Task<IActionResult> Criar([FromBody] UsersDto usersDto)
         {
+            UsersValidation validator = new UsersValidation();
+            var validationResult = validator.Validate(usersDto);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(error => error.ErrorMessage).ToList();
+                return BadRequest(errors);
+            }
+
+   
             Users users = _mapper.Map<Users>(usersDto);
             users.Password = Criptograph.Encrypt(usersDto.Password);
-          
+            users.SetUserName(users.Email);
+            TokensDto tokens = null;
 
             try
             {
-                var _idUsers = await _usersService.InsertAsync(users);
-                var Colaborators = new Colaborators(_idUsers.Id, usersDto.UserName);
+                List<Users> usuarios = await _usersService.WhereAsync(x => x.Email == usersDto.Email);
 
-                await _colaboratorsService.InsertAsync(Colaborators);
+                if (usuarios.Count == 0)
+                {
+                    var _idUsers = await _usersService.InsertAsync(users);
+                    var Colaborators = new Colaborators(_idUsers.Id, _idUsers.UserName);
+                    await _colaboratorsService.InsertAsync(Colaborators);
+                    tokens = await _autenticarService.GerarToKen(usersDto.Email);
+                }
 
             }
             catch (DbUpdateException ex)
             {
-                // Obtenha a exceção interna para mais detalhes
-                Exception excecaoInterna = ex.InnerException;
-
-                // Lide ou registre a exceção conforme necessário
-                // ...
+                var errorResponse = new ErrorResponse
+                {
+                    Message = "Ocorreu um erro ao criar o usuário.",
+                    ErrorCode = "CREATE_USER_ERROR"
+                };
+                return BadRequest(errorResponse);
             }
+            return Ok(tokens);
+        }
 
-            var token = _autenticarService.GerarToKen(usersDto.UserName);
+        [Authorize()]
+        [HttpGet("DadosUsuario")]
+        [ProducesResponseType(typeof(IEnumerable<UsersDto>), 200)]
+        public IActionResult DadosUsuario()
+        {
 
-            var TokensViewModel = new
-            {
-                //Token = token,
-                //TokenRefresh = token,
-            };
-            return Ok(TokensViewModel);
+            //bool isAuthorized = false;
+ 
+            //if (!isAuthorized)
+            //{
+            //    var response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+            //    {
+            //        Content = new StringContent("Não autorizado")
+            //    };
+
+            //    throw new System.UnauthorizedAccessException("Não autorizado");
+            //}
+
+            //var claims = User.Claims.GetEnumerator();
+            //var claims1 = User.Claims.Select(claim => new { claim.Type, claim.Value }).ToArray();
+            //int Id = 0;
+
+            //foreach (var item in claims1)
+            //{
+            //    if (item.Type == "Id")
+            //    {
+            //        Id = Convert.ToInt32(item.Value);
+            //        break;
+            //    }
+            //}
+
+            var query = from user in _db.Users
+                        join collaborator in _db.Colaborators on user.Id equals collaborator.Id
+                        where user.Id == 1
+                        select new
+                        {
+                            UserId = user.Id,
+                            UserName = user.UserName,
+                            Email = user.Email
+                        };
+
+            return Ok(query);
         }
     }
+     
 }

@@ -12,7 +12,7 @@ using SisTarefa.Infra.Data.Data;
 namespace SisTarefa.Infra.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230518204332_bco")]
+    [Migration("20230519173019_bco")]
     partial class bco
     {
         /// <inheritdoc />
@@ -192,6 +192,11 @@ namespace SisTarefa.Infra.Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime")
                         .HasColumnName("DeletedAt");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("GuidI")
                         .IsRequired()

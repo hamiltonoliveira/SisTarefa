@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using SisTarefa.Domain.Dto;
 using System;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace SisTarefa.Domain.Entities
@@ -14,20 +15,27 @@ namespace SisTarefa.Domain.Entities
 
         public string? GuidI { get; set; } = Guid.NewGuid().ToString();
 
+        public string? Email { get; set; }
+
         public Colaborators Colaborators { get; set; }
 
-        //public Users(string userName, string password)
-        //{
-        //    UserName = userName;
-        //    Password = password;
-        //}
         public void SetDeletar() => DeletedAt = DateTime.UtcNow;
+
+        public void SetUserName(string email)
+        {
+            if(email != null)
+            {
+                string[] partes = email.Split('@');
+                this.UserName = partes[0].ToLower();
+            }
+        }
         public class UsersValidation : AbstractValidator<UsersDto>
         {
             public UsersValidation()
             {
-                RuleFor(x => x.UserName).MaximumLength(250).NotNull().WithMessage("Name não pode ser nulo e o limite é até 250 caracter");
-                RuleFor(x => x.Password).MaximumLength(512).NotEmpty().WithMessage("Password não pode ser nulo");
+                RuleFor(x => x.Name).NotNull().NotEmpty().WithMessage("O campo Name não pode ser nulo");
+                RuleFor(x => x.Password).NotEmpty().WithMessage("O campo Password não pode ser nulo"); 
+                RuleFor(x => x.Email).NotNull().NotEmpty().WithMessage("O campo de Email é obrigatório.").EmailAddress().WithMessage("O campo de email não possui um formato válido.");
             }
         }
     }

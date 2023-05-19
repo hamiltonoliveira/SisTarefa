@@ -36,6 +36,7 @@ namespace SisTarefa.Infra.Data.Migrations
                     UserName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     GuidI = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime", nullable: false)

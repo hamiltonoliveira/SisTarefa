@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using SisTarefa.Domain.Dto;
 using SisTarefa.Domain.Entities;
 using SisTarefa.Domain.Helpers;
-using SisTarefa.Domain.ViewModels;
 using SisTarefa.Infra.Data.Data;
 using SisTarefa.Infra.Data.Interfaces;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,23 +14,36 @@ namespace SisTarefa.Infra.Data.Repositories
 {
     public class AutenticarRepositorio : IAutenticarRepositorio
     {
-
         protected readonly DataContext _db;
-        public async Task<TokensDto> GerarToKen(string UserName)
+
+        private readonly IUsersRepository _usersRepository;
+        public AutenticarRepositorio(IUsersRepository usersRepository)
         {
-            var user = await _db.Set<Users>().FirstOrDefaultAsync(x => x.UserName == UserName);
-            var Token = new TokensDto();
+            _usersRepository = usersRepository;
+        }
+        public async Task<TokensDto> GerarToKen(string Email)
+        {
+             List<Users> usuarios = await _usersRepository.WhereAsync(x => x.Email == Email);
 
-            if (user == null)
-            { return null; }
+             
+
+            var _UserName = string.Empty;
+            var _GuidI = string.Empty;
+
+            foreach (var item in usuarios)
+            {
+                _UserName = item.UserName;
+                _GuidI = item.GuidI;
+            }
             
-            var _Token = generateJwtToken(user.UserName, user.GuidI);
-            var _TokenRefresh = generateJwtTokenRefresh(user.GuidI);
+            var _Token = generateJwtToken(_UserName , _GuidI);
+            var _TokenRefresh = generateJwtTokenRefresh(_GuidI);
 
-            Token.Token = _Token;
-            Token.TokenRefresh = _TokenRefresh; 
-
-            return Token;
+            return new TokensDto()
+            {
+                Token = _Token,
+                TokenRefresh = _TokenRefresh
+            };
         }
 
       
@@ -43,12 +56,14 @@ namespace SisTarefa.Infra.Data.Repositories
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                  new Claim("UserName", UserName),
-                  new Claim("Guid", guid) 
+                 new Claim("UserName", UserName),
+                 new Claim("Guid", guid), 
+                 new Claim(ClaimTypes.Role, UserName)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
@@ -64,7 +79,7 @@ namespace SisTarefa.Infra.Data.Repositories
                 Subject = new ClaimsIdentity(new[] {
                    new Claim("Guid", guid)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(3),
+                Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

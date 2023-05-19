@@ -190,6 +190,11 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("DeletedAt");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("GuidI")
                         .IsRequired()
                         .HasMaxLength(200)
