@@ -25,8 +25,6 @@ namespace SisTarefa.Infra.Data.Repositories
         {
              List<Users> usuarios = await _usersRepository.WhereAsync(x => x.Email == Email);
 
-             
-
             var _UserName = string.Empty;
             var _GuidI = string.Empty;
 
@@ -49,43 +47,41 @@ namespace SisTarefa.Infra.Data.Repositories
       
         private string generateJwtToken(string UserName, string guid)
         {
-            string oculto = CodigoCripto.Cripto();
             var tokenHandler = new JwtSecurityTokenHandler();
+            string oculto = CodigoCripto.Cripto();
             var key = Encoding.ASCII.GetBytes(oculto);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                 new Claim("UserName", UserName),
-                 new Claim("Guid", guid), 
-                 new Claim(ClaimTypes.Role, UserName)
+                    new Claim("UserName", UserName),
+                    new Claim("Guid", guid),
+                    new Claim(ClaimTypes.Role, "Gerente")
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires =  DateTime.UtcNow.AddMinutes(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
         private string generateJwtTokenRefresh(string guid)
         {
-            string oculto = CodigoCripto.Cripto();
             var tokenHandler = new JwtSecurityTokenHandler();
+            string oculto = CodigoCripto.Cripto();
             var key = Encoding.ASCII.GetBytes(oculto);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                   new Claim("Guid", guid)
+                   new Claim("Guid", guid),
+                   new Claim(ClaimTypes.Role, "manager")
                 }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddMinutes(5),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-
-       
     }
 }

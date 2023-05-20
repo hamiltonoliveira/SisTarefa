@@ -72,6 +72,7 @@ builder.Services.AddServices(builder.Configuration);
  
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connectionString));
 
+// JWT
 var key = Encoding.ASCII.GetBytes(CodigoCripto.Cripto());
 
 builder.Services.AddAuthentication(x =>
@@ -87,11 +88,22 @@ builder.Services.AddAuthentication(x =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
     };
 });
 
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Gerente"));
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Vendas")); 
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Compras"));
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Estoque"));
+});
+
+// JWT
 
 var app = builder.Build();
 
@@ -105,8 +117,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
 app.UseRouting();
+app.UseAuthentication();   // JWT
+app.UseAuthorization();   // JWT
+app.MapControllers();
 app.Run();

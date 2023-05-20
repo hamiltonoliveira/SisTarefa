@@ -7,14 +7,13 @@ using SisTarefa.Api.Interfaces;
 using SisTarefa.Domain.Dto;
 using SisTarefa.Domain.Entities;
 using SisTarefa.Infra.Data.Data;
-using System.Net;
-using System.Runtime.Serialization;
 using static SisTarefa.Domain.Entities.Users;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace SisTarefa.Ui.Controller
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -37,6 +36,7 @@ namespace SisTarefa.Ui.Controller
             _colaboratorsService = colaboratorsService;
         }
 
+        [AllowAnonymous]
         [HttpPost("Criar")]
         [ProducesResponseType(typeof(UsersDto), 201)]
         [ProducesResponseType(typeof(ErrorResponse), 400)]
@@ -82,40 +82,42 @@ namespace SisTarefa.Ui.Controller
             return Ok(tokens);
         }
 
-        [Authorize()]
+        [Authorize(Roles = "Gerente")]
         [HttpGet("DadosUsuario")]
         [ProducesResponseType(typeof(IEnumerable<UsersDto>), 200)]
         public IActionResult DadosUsuario()
         {
+            var claims = User.Claims.GetEnumerator();
+            var claims1 = User.Claims.Select(claim => new { claim.Type, claim.Value }).ToArray();
+            string Guid = string.Empty;
+            int exp = 0;
 
-            //bool isAuthorized = false;
- 
-            //if (!isAuthorized)
+            foreach (var item in claims1)
+            {
+                if (item.Type == "Guid")
+                {
+                    Guid = item.Value;
+                }
+                if (item.Type == "exp")
+                {
+                    exp = int.Parse(item.Value);
+                    break;
+                }
+            }
+
+            //DateTimeOffset expirationTime = DateTimeOffset.FromUnixTimeSeconds(exp);
+            //DateTime localDateTime = expirationTime.LocalDateTime;
+
+            //bool isExpired = DateTimeOffset.Now > localDateTime;
+
+            //if (isExpired)
             //{
-            //    var response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
-            //    {
-            //        Content = new StringContent("Não autorizado")
-            //    };
-
-            //    throw new System.UnauthorizedAccessException("Não autorizado");
-            //}
-
-            //var claims = User.Claims.GetEnumerator();
-            //var claims1 = User.Claims.Select(claim => new { claim.Type, claim.Value }).ToArray();
-            //int Id = 0;
-
-            //foreach (var item in claims1)
-            //{
-            //    if (item.Type == "Id")
-            //    {
-            //        Id = Convert.ToInt32(item.Value);
-            //        break;
-            //    }
+            //    return BadRequest("Token expirado.");
             //}
 
             var query = from user in _db.Users
                         join collaborator in _db.Colaborators on user.Id equals collaborator.Id
-                        where user.Id == 1
+                        where user.GuidI == Guid
                         select new
                         {
                             UserId = user.Id,
