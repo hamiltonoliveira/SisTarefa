@@ -88,21 +88,19 @@ builder.Services.AddAuthentication(x =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero
+        ValidateIssuer = false,
+        ValidateAudience = false
     };
 });
 
 builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy(name: "Admin", policy => policy.RequireRole("Gerente"));
-    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Vendas")); 
-    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Compras"));
-    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Estoque"));
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Analista")); 
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Desenvolvedor"));
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Estagiario"));
+    option.AddPolicy(name: "Admin", policy => policy.RequireRole("Outro"));
 });
-
 // JWT
 
 var app = builder.Build();

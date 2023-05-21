@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SisTarefa.Domain.Dto;
+using SisTarefa.Domain.Enums;
 using System;
 using System.Globalization;
 using System.Text.Json.Serialization;
@@ -16,6 +17,8 @@ namespace SisTarefa.Domain.Entities
         public string? GuidI { get; set; } = Guid.NewGuid().ToString();
 
         public string? Email { get; set; }
+
+        public TipoFuncionario Role { get; set; }
 
         public Colaborators Colaborators { get; set; }
 
@@ -36,6 +39,7 @@ namespace SisTarefa.Domain.Entities
                 RuleFor(x => x.Name).NotNull().NotEmpty().WithMessage("O campo Name não pode ser nulo");
                 RuleFor(x => x.Password).NotEmpty().WithMessage("O campo Password não pode ser nulo"); 
                 RuleFor(x => x.Email).NotNull().NotEmpty().WithMessage("O campo de Email é obrigatório.").EmailAddress().WithMessage("O campo de email não possui um formato válido.");
+                RuleFor(x => x.Role).NotNull().NotEmpty().WithMessage("O campo Role não pode ser nulo");
             }
         }
     }

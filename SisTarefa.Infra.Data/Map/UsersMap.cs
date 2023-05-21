@@ -18,6 +18,7 @@ namespace SisTarefa.Infra.Data.Map
             builder.Property(x => x.Password).HasMaxLength(512).IsRequired();
             builder.Property(x => x.GuidI).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(200).IsRequired();
+            builder.Property(x => x.Role).HasMaxLength(30).IsRequired();
         }
     }
 }

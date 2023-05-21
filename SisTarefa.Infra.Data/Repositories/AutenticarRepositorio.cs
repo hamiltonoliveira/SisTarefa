@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using SisTarefa.Domain.Dto;
 using SisTarefa.Domain.Entities;
+using SisTarefa.Domain.Enums;
 using SisTarefa.Domain.Helpers;
 using SisTarefa.Infra.Data.Data;
 using SisTarefa.Infra.Data.Interfaces;
@@ -21,31 +22,33 @@ namespace SisTarefa.Infra.Data.Repositories
         {
             _usersRepository = usersRepository;
         }
-        public async Task<TokensDto> GerarToKen(string Email)
+        public async Task<TokensDto> GerarToKen(string email)
         {
-             List<Users> usuarios = await _usersRepository.WhereAsync(x => x.Email == Email);
+             List<Users> usuarios = await _usersRepository.WhereAsync(x => x.Email == email);
 
             var _UserName = string.Empty;
             var _GuidI = string.Empty;
+            var _Role = string.Empty;
 
             foreach (var item in usuarios)
             {
                 _UserName = item.UserName;
                 _GuidI = item.GuidI;
+                _Role = Enum.GetName(typeof(TipoFuncionario), item.Role);
             }
             
-            var _Token = generateJwtToken(_UserName , _GuidI);
-            var _TokenRefresh = generateJwtTokenRefresh(_GuidI);
+            var _Token = generateJwtToken(_UserName , _GuidI, _Role);
+            var _TokenRefresh = generateJwtTokenRefresh(_GuidI, _Role);
 
             return new TokensDto()
             {
                 Token = _Token,
-                TokenRefresh = _TokenRefresh
+                TokenRefresh = _TokenRefresh,
+                Role = _Role
             };
         }
 
-      
-        private string generateJwtToken(string UserName, string guid)
+        private string generateJwtToken(string UserName, string guid, string Role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             string oculto = CodigoCripto.Cripto();
@@ -56,16 +59,17 @@ namespace SisTarefa.Infra.Data.Repositories
                 Subject = new ClaimsIdentity(new[] {
                     new Claim("UserName", UserName),
                     new Claim("Guid", guid),
-                    new Claim(ClaimTypes.Role, "Gerente")
+                    new Claim(ClaimTypes.Role, Role)
                 }),
-                Expires =  DateTime.UtcNow.AddMinutes(2),
+                Expires =  DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
-        private string generateJwtTokenRefresh(string guid)
+        private string generateJwtTokenRefresh(string guid, string Role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             string oculto = CodigoCripto.Cripto();
@@ -75,9 +79,9 @@ namespace SisTarefa.Infra.Data.Repositories
             {
                 Subject = new ClaimsIdentity(new[] {
                    new Claim("Guid", guid),
-                   new Claim(ClaimTypes.Role, "manager")
+                   new Claim(ClaimTypes.Role, Role)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -82,7 +82,7 @@ namespace SisTarefa.Ui.Controller
             return Ok(tokens);
         }
 
-        [Authorize(Roles = "Gerente")]
+        [Authorize(Roles = "Desenvolvedor")]
         [HttpGet("DadosUsuario")]
         [ProducesResponseType(typeof(IEnumerable<UsersDto>), 200)]
         public IActionResult DadosUsuario()
@@ -105,6 +105,7 @@ namespace SisTarefa.Ui.Controller
                 }
             }
 
+
             //DateTimeOffset expirationTime = DateTimeOffset.FromUnixTimeSeconds(exp);
             //DateTime localDateTime = expirationTime.LocalDateTime;
 
@@ -126,6 +127,28 @@ namespace SisTarefa.Ui.Controller
                         };
 
             return Ok(query);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("RenovarToken")]
+        [ProducesResponseType(typeof(IEnumerable<RenovarToken>), 200)]
+        public async Task<IActionResult> RenovarToken([FromBody] RenovarToken renovarToken)
+        {
+            TokensDto tokens = null;
+            try
+            {
+                   tokens = await _autenticarService.GerarToKen(renovarToken.Email);
+            }
+            catch (DbUpdateException ex)
+            {
+                var errorResponse = new ErrorResponse
+                {
+                    Message = "Ocorreu um erro ao criar o usuário.",
+                    ErrorCode = "CREATE_USER_ERROR"
+                };
+                return BadRequest(errorResponse);
+            }
+            return Ok(tokens);
         }
     }
      

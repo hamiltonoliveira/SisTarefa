@@ -12,9 +12,9 @@ namespace SisTarefa.Api.Services
             _autenticarRepositorio = autenticarRepositorio;
         }
      
-        public async Task<TokensDto> GerarToKen(string GuidId)
+        public async Task<TokensDto> GerarToKen(string Email)
         {
-            TokensDto tokens = await _autenticarRepositorio.GerarToKen(GuidId);
+            TokensDto tokens = await _autenticarRepositorio.GerarToKen(Email);
             return tokens;
         }
     }

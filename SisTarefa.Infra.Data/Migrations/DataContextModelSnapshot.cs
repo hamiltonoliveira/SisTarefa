@@ -205,6 +205,10 @@ namespace SisTarefa.Infra.Data.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
+                    b.Property<int>("Role")
+                        .HasMaxLength(30)
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime")
                         .HasColumnName("UpdatedAt");

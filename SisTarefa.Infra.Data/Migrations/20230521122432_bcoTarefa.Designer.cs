@@ -12,8 +12,8 @@ using SisTarefa.Infra.Data.Data;
 namespace SisTarefa.Infra.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230519173019_bco")]
-    partial class bco
+    [Migration("20230521122432_bcoTarefa")]
+    partial class bcoTarefa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,6 +207,10 @@ namespace SisTarefa.Infra.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<int>("Role")
+                        .HasMaxLength(30)
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime")
