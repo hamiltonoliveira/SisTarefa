@@ -61,7 +61,7 @@ namespace SisTarefa.Infra.Data.Repositories
                     new Claim("Guid", guid),
                     new Claim(ClaimTypes.Role, Role)
                 }),
-                Expires =  DateTime.UtcNow.AddMinutes(10),
+                Expires =  DateTime.UtcNow.AddMinutes(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -81,7 +81,7 @@ namespace SisTarefa.Infra.Data.Repositories
                    new Claim("Guid", guid),
                    new Claim(ClaimTypes.Role, Role)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(15),
+                Expires = DateTime.UtcNow.AddMinutes(5),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

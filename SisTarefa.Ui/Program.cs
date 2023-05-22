@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using SisTarefa.Api.Interfaces;
 using SisTarefa.Domain.Helpers; 
 using SisTarefa.Infra.Data.Data; 
 using SisTarefa.Infra.Ioc;
@@ -75,23 +76,27 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(connectionString)
 // JWT
 var key = Encoding.ASCII.GetBytes(CodigoCripto.Cripto());
 
-builder.Services.AddAuthentication(x =>
+builder.Services.AddAuthentication(x=>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
+
+    .AddJwtBearer(options =>
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true, // Configura a validação da expiração do token
+            ClockSkew = TimeSpan.Zero // Define a margem de tempo para considerar o token como inválido
+        };
+    });
+
 
 builder.Services.AddAuthorization(option =>
 {
