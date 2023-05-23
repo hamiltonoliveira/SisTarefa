@@ -92,8 +92,8 @@ builder.Services.AddAuthentication(x=>
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateLifetime = true, // Configura a validação da expiração do token
-            ClockSkew = TimeSpan.Zero // Define a margem de tempo para considerar o token como inválido
+            ValidateLifetime = true, // Configura a validaï¿½ï¿½o da expiraï¿½ï¿½o do token
+            ClockSkew = TimeSpan.Zero // Define a margem de tempo para considerar o token como invï¿½lido
         };
     });
 
@@ -110,11 +110,11 @@ builder.Services.AddAuthorization(option =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tarefas v1"));
-}
+//}
 
 
 app.UseCors(MyAllowSpecificOrigins);
