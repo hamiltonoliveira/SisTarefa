@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using SisTarefa.Domain.Dto;
 using SisTarefa.Domain.Enums;
-using System;
-using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace SisTarefa.Domain.Entities
