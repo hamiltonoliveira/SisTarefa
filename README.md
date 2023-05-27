@@ -30,7 +30,7 @@ Certifique-se de cumprir quaisquer outros requisitos específicos do sistema ope
 4. Compile e execute o projeto.
 5. Para gerar o banco execute dentro do projeto: Sistarefa.Infra.Data digite: update-database
 
-6.0  Instalar imagem docker :  docker pull mcr.microsoft.com/mssql/server:2019-latest
+6.0 Instalar imagem docker :  docker pull mcr.microsoft.com/mssql/server:2019-latest
 6.1 Instalar container     :  docker run -e "ACEEPT-EULA=Y" -e "SA_PASSWORD=fm1bl2xml33" -p 1450:1433 --name sqlserverdb -d mcr.microsoft.com/mssql/server:2019-latest
 
 7.0 Instalar imagem docker :  docker build --no-cache -t sistarefapp . < Aplicação >
