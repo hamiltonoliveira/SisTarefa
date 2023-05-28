@@ -31,7 +31,6 @@ builder.Services.AddCors(options =>
                      });
 });
 
-builder.Services.AddCors();
 
 builder.Services.AddControllers().AddNewtonsoftJson(x=>x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
