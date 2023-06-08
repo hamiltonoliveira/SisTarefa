@@ -1,0 +1,23 @@
+
+version: '3.4'
+
+services:
+  sistarefaui:
+    image: sistarefaui
+    build:
+      context: .
+      dockerfile: SisTarefa.Ui/Dockerfile
+    ports:
+      - 8081:8081
+      - 80:80
+
+   
+  db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "1q2w3e4r@#$"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+   
+
